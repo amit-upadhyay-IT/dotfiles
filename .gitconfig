@@ -1,0 +1,5 @@
+[user]
+	name = Yang, Alex
+	email = alex.yang@cbsinteractive.com
+[core]
+	editor = /usr/bin/vim
