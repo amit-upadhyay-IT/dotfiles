@@ -8,9 +8,10 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="ys"
 
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
+alias zshconfig="subl ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias pyserver="python -m SimpleHTTPServer 3000"
+alias pyserver="python -m SimpleHTTPServer 2014"
+alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset' --abbrev-commit"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
