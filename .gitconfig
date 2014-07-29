@@ -6,9 +6,14 @@
 [diff]
 	tool = vimdiff
 [alias]
+  b = branch
+  ch = checkout
 	s = status
+  aa = add --all :/
   c = commit
 	cm = commit -m
   a = add
-	l = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+	lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+  l = log --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
   ll = log --stat --abbrev-commit
+  ldiff = log -p -2 --word-diff
