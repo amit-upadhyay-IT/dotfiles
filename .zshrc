@@ -11,7 +11,7 @@ ZSH_THEME="ys"
 alias zshconfig="subl ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias pyserver="python -m SimpleHTTPServer 2014"
-alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset' --abbrev-commit"
+alias o="open"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -75,5 +75,9 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+export PATH=$PATH:/Users/ayang/Desktop/activator-1.2.3
 fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gshuf -n1)
 
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

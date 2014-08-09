@@ -7,7 +7,7 @@
 	tool = vimdiff
 [alias]
   b = branch
-  ch = checkout
+  co = checkout
 	s = status
   aa = add --all :/
   c = commit
