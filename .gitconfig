@@ -17,3 +17,6 @@
   l = log --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
   ll = log --stat --abbrev-commit
   ldiff = log -p -2 --word-diff
+  dt = difftool -y -x "colordiff -y -W $COLUMNS" -R
+  p = push
+  po = push origin

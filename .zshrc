@@ -12,6 +12,8 @@ alias zshconfig="subl ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias pyserver="python -m SimpleHTTPServer 2014"
 alias o="open"
+alias dt="git difftool -y -x 'colordiff -y -W $COLUMNS' -R"
+alias sdiff="cdiff -s -w 0"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -76,6 +78,7 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 export PATH=$PATH:/Users/ayang/Desktop/activator-1.2.3
+export PATH=/Library/PostgreSQL/9.3/bin:$PATH
 fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gshuf -n1)
 
 
