@@ -1,1 +1,90 @@
-/Users/ayang/Library/Application Support/KeyRemap4MacBook/private.xml
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Alex's Layout</name>
+    <item>
+      <name>Mission Control/Dashboard to F3,F4</name>
+      <identifier>remap.consumer_expose_dashboard_to_f3_f4</identifier>
+      <autogen>__KeyToKey__ KeyCode::F3,                    KeyCode::EXPOSE_ALL</autogen>
+      <autogen>__KeyToKey__ KeyCode::F4,                    KeyCode::DASHBOARD</autogen>
+    </item>
+    <item>
+      <name>Media Controls to F5-F8</name>
+      <appendix>* Play/Pause to F5 and F6</appendix>
+      <appendix>* Previous to F7</appendix>
+      <appendix>* Next to F8</appendix>
+      <identifier>remap.musiccontrols_to_f5_f8</identifier>
+      <autogen>__KeyToConsumer__ KeyCode::F5,               ConsumerKeyCode::MUSIC_PLAY</autogen>
+      <autogen>__KeyToConsumer__ KeyCode::F6,               ConsumerKeyCode::MUSIC_PLAY</autogen>
+      <autogen>__KeyToConsumer__ KeyCode::F7,               ConsumerKeyCode::MUSIC_PREV</autogen>
+      <autogen>__KeyToConsumer__ KeyCode::F8,               ConsumerKeyCode::MUSIC_NEXT</autogen>
+    </item>
+    <item>
+      <name>Speaker Controls to F10-F12</name>
+      <appendix>* Volume Mute to F10</appendix>
+      <appendix>* Volume Down to F11</appendix>
+      <appendix>* Volume Up to F12</appendix>
+      <identifier>remap.speaker_to_fkeys_f10_f12</identifier>
+      <autogen>__KeyToConsumer__ KeyCode::F10,              ConsumerKeyCode::VOLUME_MUTE</autogen>
+      <autogen>__KeyToConsumer__ KeyCode::F11,              ConsumerKeyCode::VOLUME_DOWN</autogen>
+      <autogen>__KeyToConsumer__ KeyCode::F12,              ConsumerKeyCode::VOLUME_UP</autogen>
+    </item>
+    <item>
+      <name>Brightness to F1-F2</name>
+      <appendix>* Brightness Up to F1</appendix>
+      <appendix>* Brightness Down to F2</appendix>
+      <identifier>remap.brightness_to_fkeys_f1_f2</identifier>
+      <autogen>__KeyToConsumer__ KeyCode::F1,              ConsumerKeyCode::BRIGHTNESS_DOWN</autogen>
+      <autogen>__KeyToConsumer__ KeyCode::F2,              ConsumerKeyCode::BRIGHTNESS_UP</autogen>
+    </item>
+
+<!--     <item>
+       <name>Remap Caps Lock to Hyper</name>
+       <appendix>OS X doesn't have a Hyper. This maps Left Control to Control + Shift + Option + Command.</appendix>
+
+       <identifier>caps_lock_to_hyper</identifier>
+
+       <autogen>
+          --KeyToKey--
+          KeyCode::F19,
+
+          KeyCode::COMMAND_L,
+          ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L
+       </autogen>
+    </item> -->
+    <item>
+    <name>F19 to F19</name>
+    <appendix>(F19 to Hyper (ctrl+shift+cmd+opt) + F19 Only, send escape)</appendix>
+    <identifier>private.f192f19_escape</identifier>
+    <autogen>
+      --KeyOverlaidModifier--
+      KeyCode::F19,
+      KeyCode::COMMAND_L,
+      ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L,
+      KeyCode::ESCAPE
+    </autogen>
+  </item>
+    <item>
+    <name>Use the correct shift keys.</name>
+    <identifier>private.correct_shift_keys</identifier>
+
+    <autogen>--KeyToKey-- KeyCode::P,       ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+
+    <autogen>--KeyToKey-- KeyCode::O,       ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::L,       ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::I,       ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+
+    <autogen>--KeyToKey-- KeyCode::SEMICOLON, ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::COMMA,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::DOT,       ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::QUOTE,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::SLASH,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::BRACKET_LEFT,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::BRACKET_RIGHT,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::KEY_0,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::KEY_9,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::MINUS,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+    <autogen>--KeyToKey-- KeyCode::EQUAL,     ModifierFlag::SHIFT_R, KeyCode::VK_NONE</autogen>
+</item>
+  </item>
+</root>

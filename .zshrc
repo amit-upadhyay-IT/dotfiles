@@ -84,3 +84,6 @@ fortune | cowsay -f $(ls /usr/local/Cellar/cowsay/3.03/share/cows | gshuf -n1)
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# added by travis gem
+[ -f /Users/ayang/.travis/travis.sh ] && source /Users/ayang/.travis/travis.sh
