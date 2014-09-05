@@ -1,8 +1,9 @@
 [user]
-	name = Yang, Alex
-	email = alex.yang@cbsinteractive.com
+	name = 
+	email = 
 [core]
 	editor = vim
+	excludesfile = /Users/ayang/.gitignore_global
 [diff]
 	tool = vimdiff
 [alias]
@@ -20,3 +21,9 @@
   dt = difftool -y -x "colordiff -y -W $COLUMNS" -R
   p = push
   po = push origin
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
