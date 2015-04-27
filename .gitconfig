@@ -1,6 +1,6 @@
 [user]
 	name = 
-	email = 
+	email = alyx.yang@gmail.com
 [core]
 	editor = vim
 	excludesfile = /Users/ayang/.gitignore_global
@@ -12,18 +12,23 @@
 	s = status
   aa = add --all :/
   c = commit
-	cm = commit -m
+    cm = commit -m
+    cam = commit -am
   a = add
 	lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
   l = log --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
   ll = log --stat --abbrev-commit
   ldiff = log -p -2 --word-diff
   dt = difftool -y -x "colordiff -y -W $COLUMNS" -R
-  p = push
-  po = push origin
+    pl = pull
+    plom = pull origin master
+    pu = push
+    puo = push origin
+    puom = push origin master
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
