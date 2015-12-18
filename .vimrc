@@ -15,7 +15,7 @@ call vundle#begin()
 
 " run :PluginInstall to install once Vundle is configured
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle
-Plugin 'reidHoruff/tagless'
+"Plugin 'reidHoruff/tagless'
 Plugin 'bling/vim-airline'
 Plugin 'wincent/command-t'
 Plugin 'vim-scripts/a.vim'
@@ -32,9 +32,11 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " cursor shape change, mouse support, focus reporting, bracketed paste, etc
 Plugin 'wincent/terminus'
-"Plugin 'henrik/vim-indexed-search'
+Plugin 'henrik/vim-indexed-search'
 Plugin 'majutsushi/tagbar'
 Plugin 'kien/ctrlp.vim'
+Plugin 'altercation/vim-colors-solarized'
+"Plugin 'vim-scripts/Conque-GDB'
 
 
 " All of your Plugins must be added before the following line
@@ -45,6 +47,11 @@ syntax enable
 
 set background=dark
 set t_Co=256  " 256 term coloring
+let g:solarized_termtrans = 1
+let g:solarized_termcolors=16
+"let g:solarized_visibility='high'
+"let g:solarized_contrast = 'high'
+
 colorscheme solarized
 
 " Display.
@@ -69,9 +76,15 @@ set backspace=indent,eol,start  " backspace over everything
 set undolevels=1000   " number of undos stored
 set viminfo='50,"50   " '=marks for x files, "=registers for x files
 
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+ \ if line("'\"") > 0 && line("'\"") <= line("$") |
+ \   exe "normal! g`\"" |
+ \ endif
+
 set modelines=0       " modelines are bad for your health
 
-"remember cursor position
+" Prevent the cursor from changing the current column when jumping to other lines within the window
 set nosol
 
 " recursively search parent directories until tag file found
@@ -105,9 +118,22 @@ set noswapfile
 set nobackup
 set nowb
 
-" Keep undo history across sessions, by storing in file. This never works
+" Keep undo history across sessions, by storing in file.
 "set undodir=~/.vim/backups
 "set undofile
+
+" [FB-ONLY]
+" Can't set SELinux security context on nfs, which FB homedirs use, so
+" override the default location
+let undo_base_dir = $HOME . '/local/.vim/'
+for directory in ["backup", "swap", "undo"]
+  silent! call mkdir(undo_base_dir . directory, "p")
+endfor
+let &backupdir = undo_base_dir . '/backup//'
+let &directory = undo_base_dir . '/swap//'
+let &undodir = undo_base_dir . '/undo//'
+" Keep undo history across sessions, by storing in file. This never works
+set undofile
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -138,6 +164,10 @@ set hlsearch
 " Makes search act like search in modern browsers
 set incsearch 
 
+" Map <C-L> (redraw screen) to also turn off search highlighting until the
+" next search
+nnoremap <C-L> :nohl<CR><C-L>
+
 " let copy and paste work with yy, D, P, etc
 " set clipboard=unnamed
 
@@ -153,9 +183,12 @@ set laststatus=2
 
 " Line text past 80 char
 set textwidth=80
+"set colorcolumn=+1 " relative (to textwidth) columns to highlight "
+
 set colorcolumn=81 " absolute columns to highlight "
-set colorcolumn=+1 " relative (to textwidth) columns to highlight "
-:highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+" find ctermbg colors here: http://cl.pocari.org/images/vim-256color.png
+:highlight ColorColumn guibg=#073642 ctermbg=23
 
 " Tabs Settings
 set shiftwidth=2    " two spaces per indent
@@ -174,6 +207,9 @@ set ttyfast
 
 " Don't get rid of buffers when changing files, used with minibufexpl 
 set hidden
+
+" Prompt before closing a buffer if unsaved work
+set confirm
 
 " Autocompletion for buffer usingn tab
 set wildmenu
@@ -218,7 +254,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Show buffer numbers in airline
-let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_show = 0
 
 " Powerline fonts on
 let g:airline_powerline_fonts = 1
@@ -244,9 +280,12 @@ let g:tagless_infer_file_types=1
 " vim - notes directory
 let g:notes_directories = ['~/notes']
 let g:notes_conceal_url = 0
+let g:notes_conceal_bold = 0
 let g:notes_conceal_italic = 0
 let g:notes_smart_quotes = 0
-let g:notes_conceal_code = 0
+"let g:notes_unicode_enabled = 0
+"let g:notes_conceal_code = 0
+highlight link notesSingleQuoted Constant
 
 " disable insert cursor change from Terminus Plugin
 let g:TerminusCursorShape = 0
@@ -262,7 +301,7 @@ nmap <leader>r :CtrlPMRU<CR>
 let g:ctrlp_max_files = 300000
 let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:25,results:25'
 let g:ctrlp_cmd='CtrlP :pwd'
-let g:ctrlp_lazy_update = 180
+let g:ctrlp_lazy_update = 210
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -291,7 +330,37 @@ function! HasPaste()
   return ''
 endfunction
 
+augroup reload_vimrc
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
 " FB specific stuff
 " Treat *.test files as sql to get better syntax highlighting
 "au BufReadPost *.test set syntax=sql
 
+" ConqueTerm settings
+"let g:ConqueGdb_Leader = '~'
+"let g:ConqueTerm_Color = 1
+""let g:ConqueTerm_InsertOnEnter = 1
+"let g:ConqueTerm_CloseOnEnd = 1
+"let g:ConqueTerm_StartMessages = 0
+
+"noremap <leader>d :call DebuggerMode()<CR>:ConqueGdb<Space>
+"let g:debug_is_on = 0
+"function! DebuggerMode()   
+  "if g:debug_is_on
+    "" turn off debug settings
+    "set rnu
+    "set colorcolumn=81
+    "ToggleWhitespace
+    "let g:debug_is_on = 0
+  "else
+    "" turn on debug settings
+    "set nornu
+    "set colorcolumn=0
+    "ToggleWhitespace
+    "let g:debug_is_on = 1
+  "endif
+"endfunction
+"
