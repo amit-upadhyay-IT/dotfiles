@@ -6,6 +6,9 @@ as specified by 'myTime' (in minutes). Load it into Automator.
 It is best used in conjunction with a custom Mac Calendar event to trigger it automatically at a certain time
 each day.  Remember to set computer to wake up from sleep beforehand if triggering in morning.
 
+Test run it beforehand, as it needs to be able to access accessibility settings, as well approved on the first run.
+Also, make sure to use a Calendar that is NOT synced with iCloud or custom file opens will not work.
+
 ==============================================================================================================
 
 set myTime to 420
