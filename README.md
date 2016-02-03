@@ -1,12 +1,12 @@
-#Dotfiles for OSX
+#My Dotfiles
 
 ##Setting up a Dotfiles Repository
 
 Create a directory called .dotfiles to hold all your configurations, and initialise it as an empty Git repository.
 
 ```
-$ mkdir .dotfiles
-$ cd .dotfiles
+$ mkdir dotfiles
+$ cd dotfiles
 $ git init
 ```
 
@@ -14,14 +14,12 @@ Copy in the configuration files we want to track, and drop symbolic links to the
 
 ```
 $ cd
-$ mv .vim .dotfiles/vim
-$ mv .vimrc .dotfiles/vimrc
-$ mv .screenrc .dotfiles/screenrc
-$ mv .gitconfig .dotfiles/gitconfig
-$ ln -s .dotfiles/vim .vim
-$ ln -s .dotfiles/vimrc .vimrc
-$ ln -s .dotfiles/screenrc .screenrc
-$ ln -s .dotfiles/gitconfig .gitconfig
+$ mv .vimrc dotfiles/.vimrc
+$ mv .tmux.conf dotfiles/.tmux.conf
+$ mv .gitconfig dotfiles/.gitconfig
+$ ln -s dotfiles/.vimrc .vimrc
+$ ln -s dotfiles/.tmux.conf .tmux.conf
+$ ln -s dotfiles/.gitconfig .gitconfig
 ```
 
 Drop into the .dotfiles directory, add everything to the staging area, and commit/push it (make sure you have a new remote github repository set up first):
@@ -39,11 +37,10 @@ $ git push -u origin master
 When you’re working with a new machine onto which you’d like to clone your configuration, you clone the repository from GitHub, and delete any existing versions of those files in your home directory to replace them with symbolic links into your repository, like so:
 
 ```
-$ git clone git@github.com:aly006/dotfiles.git .dotfiles
-$ rm -r .vim .vimrc .screenrc .gitconfig
-$ ln -s .dotfiles/vim .vim
-$ ln -s .dotfiles/vimrc .vimrc
-$ ln -s .dotfiles/screenrc .screenrc
-$ ln -s .dotfiles/gitconfig .gitconfig
+$ git clone git@github.com:aly006/dotfiles.git dotfiles
+$ rm -r .vimrc .tmux.conf .gitconfig
+$ ln -s dotfiles/.vimrc .vimrc
+$ ln -s dotfiles/.tmux.conf .tmux.conf 
+$ ln -s dotfiles/.gitconfig .gitconfig
 ```
 
