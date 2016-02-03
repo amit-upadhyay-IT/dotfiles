@@ -16,6 +16,9 @@ __powerline() {
     readonly PS_SYMBOL_AT='@'
     readonly PS_SYMBOL_PROMPT='>>'
     readonly PS_SYMBOL_ERROR='x'
+    readonly PS_SYMBOL_LINUX='$'
+    readonly POWERLINE_SEPARATOR=''
+
 
     # Solarized colorscheme
     readonly FG_BASE03="\[$(tput setaf 8)\]"
@@ -110,8 +113,11 @@ __powerline() {
         PS1+="$BG_BLACK$FG_BLUE $PS_SYMBOL_USERNAME$RESET"
         PS1+="$BG_BLACK$FG_RED $PS_SYMBOL_AT$RESET "
         PS1+="$BG_BLACK$FG_GREEN$PS_SYMBOL_HOSTNAME$RESET "
+        PS1+="$BG_BLUE$FG_BLACK$POWERLINE_SEPARATOR$RESET"
         PS1+="$BG_BLUE$FG_BLACK \w $RESET"
-        PS1+="$BG_GREEN$FG_BLACK$(__git_info)$RESET \n"
+        PS1+="$BG_GREEN$FG_BLUE$POWERLINE_SEPARATOR$RESET"
+        PS1+="$BG_GREEN$FG_BLACK$(__git_info)$RESET"
+        PS1+="$BG_BASE03$FG_GREEN$POWERLINE_SEPARATOR$RESET \n"
         PS1+="$BG_BASE03$FG_BLUE $PS_SYMBOL_PROMPT$RESET "
 
         echo ""
