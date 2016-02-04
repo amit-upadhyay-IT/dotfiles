@@ -6,7 +6,8 @@ __powerline() {
     readonly PS_SYMBOL_DARWIN=''
     readonly PS_SYMBOL_LINUX='$'
     readonly PS_SYMBOL_OTHER='%'
-    readonly GIT_BRANCH_SYMBOL='⑂ '
+    #readonly GIT_BRANCH_SYMBOL='⑂ '
+    readonly GIT_BRANCH_SYMBOL=' '
     readonly GIT_BRANCH_CHANGED_SYMBOL='+'
     readonly GIT_BRANCH_UNTRACKED_SYMBOL='?'
     readonly GIT_NEED_PUSH_SYMBOL='⇡'
@@ -16,7 +17,6 @@ __powerline() {
     readonly PS_SYMBOL_AT='@'
     readonly PS_SYMBOL_PROMPT='>>'
     readonly PS_SYMBOL_ERROR='x'
-    readonly PS_SYMBOL_LINUX='$'
     readonly POWERLINE_SEPARATOR=''
 
 
@@ -111,8 +111,8 @@ __powerline() {
         fi
 
         PS1+="$BG_BLACK$FG_BLUE $PS_SYMBOL_USERNAME$RESET"
-        PS1+="$BG_BLACK$FG_RED $PS_SYMBOL_AT$RESET "
-        PS1+="$BG_BLACK$FG_GREEN$PS_SYMBOL_HOSTNAME$RESET "
+        PS1+="$BG_BLACK$FG_RED $PS_SYMBOL_AT $RESET"
+        PS1+="$BG_BLACK$FG_GREEN$PS_SYMBOL_HOSTNAME $RESET"
         PS1+="$BG_BLUE$FG_BLACK$POWERLINE_SEPARATOR$RESET"
         PS1+="$BG_BLUE$FG_BLACK \w $RESET"
         PS1+="$BG_GREEN$FG_BLUE$POWERLINE_SEPARATOR$RESET"

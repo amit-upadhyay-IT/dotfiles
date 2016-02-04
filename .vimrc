@@ -9,6 +9,9 @@ set nocompatible
 " won't be run.
 filetype off
 
+" Setup FZF
+set rtp+=~/.fzf
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -17,7 +20,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle
 "Plugin 'reidHoruff/tagless'
 Plugin 'bling/vim-airline'
-Plugin 'wincent/command-t'
+"Plugin 'wincent/command-t'
 Plugin 'vim-scripts/a.vim'
 Plugin 'scrooloose/nerdcommenter'
 "Plugin 'ConradIrwin/vim-bracketed-paste'
@@ -32,15 +35,26 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 " cursor shape change, mouse support, focus reporting, bracketed paste, etc
 Plugin 'wincent/terminus'
-Plugin 'henrik/vim-indexed-search'
+"Plugin 'henrik/vim-indexed-search'
 Plugin 'majutsushi/tagbar'
 Plugin 'kien/ctrlp.vim'
+" Fork of ctrlp by kien, since he no longer maintains the project
+" Disabled for now since it doesnt work with ctrlp-tjump
+"Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ivalkeen/vim-ctrlp-tjump'
 Plugin 'altercation/vim-colors-solarized'
 "Plugin 'vim-scripts/Conque-GDB'
-
+"Plugin 'rking/ag.vim'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'easymotion/vim-easymotion'
+"Plugin 'yonchu/accelerated-smooth-scroll'
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+"Plugin 'rhysd/clever-f.vim'
+Plugin 'junegunn/fzf.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
+
 
 filetype indent plugin on
 syntax enable
@@ -139,6 +153,11 @@ set undofile
 " like <leader>w saves the current file
 let mapleader = ","
 let g:mapleader = ","
+"let mapleader = "\<Space>"
+"let g:mapleader = "\<Space>"
+
+" cf opens editable command history
+map <C-f> q:i
 
 " highlight current line curosr is on
 set cursorline
@@ -188,7 +207,7 @@ set textwidth=80
 set colorcolumn=81 " absolute columns to highlight "
 
 " find ctermbg colors here: http://cl.pocari.org/images/vim-256color.png
-:highlight ColorColumn guibg=#073642 ctermbg=23
+":highlight ColorColumn guibg=#268bd2 ctermbg=23
 
 " Tabs Settings
 set shiftwidth=2    " two spaces per indent
@@ -254,7 +273,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Show buffer numbers in airline
-let g:airline#extensions#tabline#buffer_nr_show = 0
+let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " Powerline fonts on
 let g:airline_powerline_fonts = 1
@@ -262,20 +281,13 @@ let g:airline_powerline_fonts = 1
 " Airline theme
 let g:airline_theme='solarized'
 
-"number of context lines to display
-let g:tagless_context_lines=0
+" disable fileencoding, fileformat
+let g:airline_section_y=''
+" disable syntastic, whitespace
+let g:airline_section_warning=''
+" disable bufferline/filename
+let g:airline_section_c=''
 
-"highlight the current string being grepped for in results
-let g:tagless_highlight_result=1
-
-"height of the preview window which contains the grep results
-let g:tagless_window_height=30
-
-"set syntax based on the current buffer - it's shitty
-let g:tagless_enable_shitty_syntax_highlighting=1
-
-"infer what files to grep through based on current buffer
-let g:tagless_infer_file_types=1
 
 " vim - notes directory
 let g:notes_directories = ['~/notes']
@@ -283,16 +295,24 @@ let g:notes_conceal_url = 0
 let g:notes_conceal_bold = 0
 let g:notes_conceal_italic = 0
 let g:notes_smart_quotes = 0
-"let g:notes_unicode_enabled = 0
-"let g:notes_conceal_code = 0
-highlight link notesSingleQuoted Constant
+let g:notes_unicode_enabled = 0
+let g:notes_conceal_code = 0
+"highlight link notesSingleQuoted Constant
 
 " disable insert cursor change from Terminus Plugin
 let g:TerminusCursorShape = 0
 
-
 " toggle tagbar plugin
 nmap <leader>g :TagbarToggle<CR>
+let g:tagbar_left = 1
+let g:tagbar_width = 50
+let g:tagbar_foldlevel = 1
+
+" FZF - overwrites command-t for now
+"let $FZF_DEFAULT_COMMAND= "ag -g ''"
+nmap <leader>t :FZF<CR>
+nmap <leader>a :Tags<CR>
+nmap <leader>w :w<CR>
 
 " Ctrlp
 "nmap <leader>t :CtrlP<CR>
@@ -319,9 +339,6 @@ endif
 " Bind <leader>y to forward last-yanked text to Clipper
 nnoremap <leader>y :call system('nc localhost 8377', @0)<CR>
 
-"grep for current word under cursor - its the only command
-map gf :TaglessCW<CR>
-
 " Returns true if paste mode is enabled
 function! HasPaste()
   if &paste
@@ -338,6 +355,33 @@ augroup END
 " FB specific stuff
 " Treat *.test files as sql to get better syntax highlighting
 "au BufReadPost *.test set syntax=sql
+
+" NerdCommenter alternate syntax for .test files - currently not working!
+let g:NERDCustomDelimiters = {
+    \ 'test': { 'left': '#', 'leftAlt': '#'},
+\ }
+let NERD_test_alt_style=1
+
+" Require tpope/vim-repeat to enable dot repeat support
+" Jump to anywhere with only `s{char}{target}`
+" `s<CR>` repeat last find motion.
+nmap s <Plug>(easymotion-s2)
+let g:EasyMotion_smartcase = 1
+
+" Ctrlp fuzzy find for tags - overrides default tag jump
+nnoremap <c-]> :CtrlPtjump<cr>
+vnoremap <c-]> :CtrlPtjumpVisual<cr>
+" if only one result, jump silently and immediately
+let g:ctrlp_tjump_only_silent = 1
+" don't show tag name in results as it wastes space
+let g:ctrlp_tjump_skip_tag_name = 1
+
+" gitgutter git diff config
+let g:gitgutter_diff_args = 'HEAD~1'
+let g:gitgutter_max_signs = 2048
+
+" Configure ag.vim to start searching from your project root instead of the cwd
+"let g:ag_working_path_mode="r"
 
 " ConqueTerm settings
 "let g:ConqueGdb_Leader = '~'
