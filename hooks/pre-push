@@ -1,11 +1,8 @@
 #!/bin/sh
 
-<<<<<<< HEAD
 # Run 'ln -s -f ../../hooks/pre-push .git/hooks/pre-push' from the base
 # directory to symlink this into your git hooks
 
-=======
->>>>>>> 8624aa1f67b9bfa859276c9708665499fc613d5a
 # Called by "git push" after it has checked the remote status, but before
 # anything has been pushed.  If this script exits with a non-zero status
 # nothing will be pushed.
@@ -54,6 +51,5 @@ do
 done
 
 echo >&2 "[SUCCESS] Push successful."
-exit 1
 exit 0
 
