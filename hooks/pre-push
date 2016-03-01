@@ -41,6 +41,12 @@ do
     fi
 
     # Check for Reviewed By text in commit
+    for Variable in $(git rev-list "$range")
+    do
+      echo "$Variable"
+    done
+    exit 1
+
     commit=`git rev-list -n 1 --grep '^Reviewed By: ' "$range"`
     if [ "" == "$commit" ]
     then
