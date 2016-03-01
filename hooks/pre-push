@@ -19,8 +19,11 @@
 #
 #   <local ref> <local sha1> <remote ref> <remote sha1>
 
+echo >&2 "Performing pre-push checks..."
+
 remote="$1"
 url="$2"
+status=0
 
 z40=0000000000000000000000000000000000000000
 
@@ -48,12 +51,25 @@ do
       then
         :
       else
-        echo >&2 "[POLICY] Found un-reviewed commit $Rev, not pushing.  Please make sure a differential has been created for this commit.  To push anyways, use the --no-verify flag."
+        echo >&2 "[POLICY] Found un-reviewed commit $Rev, not pushing.  Please make sure a differential has been created for this commit."
+        status=1
       fi
     done
   fi
 done
 
-echo >&2 "[SUCCESS] Pre-push checks passed."
-exit 0
+webscalesql_branch='master'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 
+if [ $webscalesql_branch != $current_branch ]
+then
+    echo >&2 "[POLICY] Please direct all pushes to the branch $webscalesql_branch, the current branch you are pushing to is outdated."
+    $status=1
+fi
+
+if [ $status == 0]
+  echo >&2 "[SUCCESS] Pre-push checks passed."
+  exit 0
+else
+  echo >&2 "[FAILURE] Some checks failed.  To push anyways, use the --no-verify flag."
+  exit 1
