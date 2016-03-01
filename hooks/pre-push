@@ -41,9 +41,9 @@ do
     fi
 
     # Check for Reviewed By text in commit
-    for Variable in $(git rev-list "$range")
+    for Rev in $(git rev-list "$range")
     do
-      echo "$Variable"
+      echo "$Rev"
     done
     exit 1
 
