@@ -28,7 +28,6 @@ while read local_ref local_sha remote_ref remote_sha
 do
   if [ "$local_sha" = $z40 ]
   then
-    # Handle delete
     :
   else
     if [ "$remote_sha" = $z40 ]
@@ -43,19 +42,18 @@ do
     # Check for Reviewed By text in commit
     for Rev in $(git rev-list "$range")
     do
-      echo "$Rev"
+      message=`git cat-file commit "$Rev" | sed '1,/^$/d'`
+      #if [[ $message =~ Reviewed\ By:\ .+ ]]
+      if [[ $message =~ .+ ]]
+      then
+        :
+      else
+        echo >&2 "[POLICY] Found un-reviewed commit $Rev, not pushing.  Please make sure a differential has been created for this commit.  To push anyways, use the --no-verify flag."
+      fi
     done
-    exit 1
-
-    commit=`git rev-list -n 1 --grep '^Reviewed By: ' "$range"`
-    if [ "" == "$commit" ]
-    then
-      echo >&2 "[POLICY] Found un-reviewed commit in $local_ref, not pushing.  Please make sure a differential has been created for this commit.  To push anyways, use the --no-verify flag."
-      exit 1
-    fi
   fi
 done
 
-echo >&2 "[SUCCESS] Push successful."
+echo >&2 "[SUCCESS] Pre-push checks passed."
 exit 0
 
