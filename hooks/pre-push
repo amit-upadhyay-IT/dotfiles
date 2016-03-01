@@ -19,6 +19,8 @@
 #
 #   <local ref> <local sha1> <remote ref> <remote sha1>
 
+echo >&2 "Performing pre-push checks..."
+
 remote="$1"
 url="$2"
 
