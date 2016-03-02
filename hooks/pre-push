@@ -58,18 +58,20 @@ do
   fi
 done
 
-webscalesql_branch='master'
+webscalesql_branch="$(curl --silent -x fwdproxy:8080 https://api.github.com/repos/facebook/mysql-5.6 | grep 'default_branch' | sed 's/.* "//' | sed 's/",//')"
 current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 
 if [ $webscalesql_branch != $current_branch ]
 then
-    echo >&2 "[POLICY] Please direct all pushes to the branch $webscalesql_branch, the current branch you are pushing to is outdated."
-    $status=1
+    echo >&2 "[POLICY] Please direct all pushes to the branch $webscalesql_branch, the current branch you are pushing to ($current_branch) is incorrect."
+    status=1
 fi
 
-if [ $status == 0]
+if [ $status -eq 0 ]
+then
   echo >&2 "[SUCCESS] Pre-push checks passed."
   exit 0
 else
   echo >&2 "[FAILURE] Some checks failed.  To push anyways, use the --no-verify flag."
   exit 1
+fi
