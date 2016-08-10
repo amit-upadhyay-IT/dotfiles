@@ -19,15 +19,18 @@ call vundle#begin()
 " run :PluginInstall to install once Vundle is configured
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle
 "Plugin 'reidHoruff/tagless'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'wincent/command-t'
-Plugin 'vim-scripts/a.vim'
+"Plugin 'vim-scripts/a.vim'
+" fork of vim-scripts/a.vim with leader mappings removed
+Plugin 'aly006/a.vim'
 Plugin 'scrooloose/nerdcommenter'
 "Plugin 'ConradIrwin/vim-bracketed-paste'
 Plugin 'Yggdroot/indentLine'
 Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'xolox/vim-notes'
 Plugin 'xolox/vim-misc'
 Plugin 'airblade/vim-gitgutter'
@@ -36,7 +39,7 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 " cursor shape change, mouse support, focus reporting, bracketed paste, etc
 Plugin 'wincent/terminus'
 "Plugin 'henrik/vim-indexed-search'
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 Plugin 'kien/ctrlp.vim'
 " Fork of ctrlp by kien, since he no longer maintains the project
 " Disabled for now since it doesnt work with ctrlp-tjump
@@ -51,6 +54,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 "Plugin 'rhysd/clever-f.vim'
 Plugin 'junegunn/fzf.vim'
+"Plugin 'tmhedberg/SimpylFold'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -59,7 +63,8 @@ call vundle#end()
 filetype indent plugin on
 syntax enable
 
-set background=dark
+"set background=dark
+set background=light
 set t_Co=256  " 256 term coloring
 let g:solarized_termtrans = 1
 let g:solarized_termcolors=16
@@ -103,7 +108,7 @@ set nosol
 
 " recursively search parent directories until tag file found
 set tags=tags;/
-set iskeyword=@,45,48-57,58,_,192-255,#
+"set iskeyword=@,45,48-57,58,_,192-255,#
 
 "set background=dark
 
@@ -151,10 +156,10 @@ set undofile
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
-"let mapleader = "\<Space>"
-"let g:mapleader = "\<Space>"
+"let mapleader = ","
+"let g:mapleader = ","
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " cf opens editable command history
 map <C-f> q:i
@@ -201,10 +206,10 @@ set laststatus=2
 "set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 " Line text past 80 char
-set textwidth=80
+set textwidth=79
 "set colorcolumn=+1 " relative (to textwidth) columns to highlight "
 
-set colorcolumn=81 " absolute columns to highlight "
+set colorcolumn=80 " absolute columns to highlight "
 
 " find ctermbg colors here: http://cl.pocari.org/images/vim-256color.png
 ":highlight ColorColumn guibg=#268bd2 ctermbg=23
@@ -255,7 +260,8 @@ let NERDTreeShowHidden=1
 "noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 40, 8)<CR>
 
 " indentline stuff - requires indentline plugin
-let g:indentLine_color_term = 239
+"let g:indentLine_color_term = 239
+let g:indentLine_color_term = 250 " for solarized light
 let g:indentLine_char = '┆'
 
 " command-t settings for FB
@@ -282,11 +288,11 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='solarized'
 
 " disable fileencoding, fileformat
-let g:airline_section_y=''
+"let g:airline_section_y=''
 " disable syntastic, whitespace
 let g:airline_section_warning=''
 " disable bufferline/filename
-let g:airline_section_c=''
+"let g:airline_section_c=''
 
 
 " vim - notes directory
@@ -303,16 +309,19 @@ let g:notes_conceal_code = 0
 let g:TerminusCursorShape = 0
 
 " toggle tagbar plugin
-nmap <leader>g :TagbarToggle<CR>
-let g:tagbar_left = 1
-let g:tagbar_width = 50
-let g:tagbar_foldlevel = 1
+"nmap <leader>g :TagbarToggle<CR>
+"let g:tagbar_left = 1
+"let g:tagbar_width = 50
+"let g:tagbar_foldlevel = 1
 
 " FZF - overwrites command-t for now
 "let $FZF_DEFAULT_COMMAND= "ag -g ''"
 nmap <leader>t :FZF<CR>
 nmap <leader>a :Tags<CR>
 nmap <leader>w :w<CR>
+nmap <leader>q :q<CR>
+nmap <leader>fq :q!<CR>
+nmap <leader>s :A<CR>
 
 " Ctrlp
 "nmap <leader>t :CtrlP<CR>
@@ -356,9 +365,10 @@ augroup END
 " Treat *.test files as sql to get better syntax highlighting
 "au BufReadPost *.test set syntax=sql
 
-" NerdCommenter alternate syntax for .test files - currently not working!
+" NerdCommenter alternate syntax for .test files
+" This requires a custom filetype to work
 let g:NERDCustomDelimiters = {
-    \ 'test': { 'left': '#', 'leftAlt': '#'},
+    \ 'mysql_test_framework': { 'left': '#'},
 \ }
 let NERD_test_alt_style=1
 
@@ -408,3 +418,4 @@ let g:gitgutter_max_signs = 2048
   "endif
 "endfunction
 "
+
